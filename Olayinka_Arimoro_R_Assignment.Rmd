@@ -1,0 +1,365 @@
+---
+title: "Olayinka_Arimoro_R_assignment"
+author: "Olayinka Arimoro"
+date: "December 9, 2019"
+output: html_document
+
+This assignment was completed on `r date()`. I successfully made the publication, here is the link http://rpubs.com/Predicare/560226 to the publication
+
+```{r Setting working directory}
+# Setting the working directory
+setwd("C:/Users/hp 2018/Desktop/Data_Science/iAspire_Fellow/Module_One/Essential_Statistics_and_R/R/student_files_r")
+```
+### a
+```{r}
+datamininggrades=c(90,87,69,89,58,93,99,98,76,88)
+sort(x=datamininggrades)
+```
+### b
+```{r}
+sort(x=datamininggrades, decreasing = TRUE)
+```
+### c
+```{r}
+lettergrade <- c("A-", "B+", "F", "B+", "F", "A", "A", "A", "C+", "B+")
+sort(x=lettergrade)
+```
+### d
+```{r}
+lettergradefactor <- factor(lettergrade)
+lettergradefactor
+# Sorting lettergradefactor
+sort(x=lettergradefactor)
+```
+### e (Sorting an ordinal variable)
+```{r}
+#create the variable
+agreement <- c("Strongly Disagree", "Disagree", "Somewhat Disagree","Neither agree or disagree", "Somewhat agree", "Agree", "Strongly Agree")
+#view the variable
+agreement
+
+# convert to factor
+agreementfactor <- factor(agreement)
+# View the factor created
+agreementfactor
+
+# Sort agreement factor
+sort(x=agreementfactor)
+# Observation: It sorted using the alphabets, which is not really useful
+
+# Sorting by factor levels
+# Creating a factor of "agreement" and defining its levels
+agreementfactor <- factor(agreement, levels = c("Strongly Disagree", "Disagree", "Somewhat Disagree","Neither agree or disagree", "Somewhat agree", "Agree", "Strongly Agree"))
+# sort
+sort(x=agreementfactor)
+```
+### f (Creating a dataframe)
+```{r}
+finalgrades <- data.frame(datamininggrades, lettergrade)
+finalgrades
+```
+### g (Sorting a dataframe)
+```{r}
+# In ascending order
+finalgrades[with(finalgrades, order(datamininggrades)), ]
+# In descending order
+finalgrades[with(finalgrades, order(-datamininggrades)), ]
+```
+### h (Reshaping a dataframe)
+```{r}
+# Importing the dataset
+internet <- read.csv("world_internet_usage.csv", header=T, sep=",")
+# Viewing the dataset
+View(internet)
+
+# Change the column names
+names(internet) <- c("country", "2000", "2001", "2002", "2003", "2004", "2005", "2006", "2007", "2008", "2009", "2010", "2011", "2012")
+
+# Checking the structure of the data "internet"
+str(internet)
+```
+### i (Creating a histogram for a year)
+```{r}
+# single histogram for a single year
+hist(internet$"2000", breaks=8, freq=TRUE, 
+    main="Histogram of Internet Usage in 2000", 
+    xlab = "Internet Usage")
+```
+### j (Plotting a matrix of histograms)
+```{r}
+require(lattice)
+h1 =histogram(internet$"2000", breaks=8, xlab="Internet Usage", main="2000")
+h2 =histogram(internet$"2001", breaks=8, xlab="Internet Usage", main="2001")
+h3 =histogram(internet$"2002", breaks=8, xlab="Internet Usage", main="2002")
+h4 =histogram(internet$"2003", breaks=8, xlab="Internet Usage", main="2003")
+h5 =histogram(internet$"2004", breaks=8, xlab="Internet Usage", main="2004")
+h6 =histogram(internet$"2005", breaks=8, xlab="Internet Usage", main="2005")
+h7 =histogram(internet$"2006", breaks=8, xlab="Internet Usage", main="2006")
+h8 =histogram(internet$"2007", breaks=8, xlab="Internet Usage", main="2007")
+h9 =histogram(internet$"2008", breaks=8, xlab="Internet Usage", main="2008")
+h10 =histogram(internet$"2009", breaks=8, xlab="Internet Usage", main="2009")
+h11 =histogram(internet$"2010", breaks=8, xlab="Internet Usage", main="2010")
+h12 =histogram(internet$"2011", breaks=8, xlab="Internet Usage", main="2011")
+h13 =histogram(internet$"2012", breaks=8, xlab="Internet Usage", main="2012")
+
+print(h1, split=c(1,1,4,4), more=T);
+print(h2, split=c(2,1,4,4), more=T);
+print(h3, split=c(3,1,4,4), more=T);
+print(h4, split=c(4,1,4,4), more=T);
+print(h5, split=c(1,2,4,4), more=T);
+print(h6, split=c(2,2,4,4), more=T);
+print(h7, split=c(3,2,4,4), more=T);
+print(h8, split=c(4,2,4,4), more=T);
+print(h9, split=c(1,3,4,4), more=T);
+print(h10, split=c(2,3,4,4), more=T);
+print(h11, split=c(3,3,4,4), more=T);
+print(h12, split=c(4,3,4,4), more=T);
+print(h13, split=c(1,4,4,4), more=F);
+```
+### k (transform internet data frame from wide to long format)
+```{r}
+library(reshape2)
+iw_melt = melt(internet,id.vars="country", variable.name="year", value.name="usage")
+View(iw_melt)
+```
+### l (Plotting the data )
+```{r}
+plot(iw_melt$year,iw_melt$usage, main="Box plot of Year and usage of internet")
+```
+### m (Using the ggplot function to plot a line plot for each country)
+```{r}
+library(ggplot2)
+ggplot(iw_melt,aes(x=year,y=usage,colour=country,group=country)) + geom_line(lwd=1)
+```
+### n (while loops)
+```{r}
+counter = 0
+while (counter <9) {
+  print(counter)
+  counter = counter + 1
+}
+```
+### o (for loops)
+```{r}
+for (value in 1:10)
+{
+  print(value)
+}
+```
+### p 
+```{r}
+for (i in internet$country)
+{
+	caps = toupper(i)
+print (caps)
+}
+```
+### q
+```{r}
+weather = "rain"
+if (weather == "rain") {
+
+#bring umbrella
+print("Don't forget your umbrella")
+}
+```
+### r
+```{r}
+meaninternet = mean(internet$"2012")
+if (internet$"2012"[1] <= meaninternet) {
+  print (as.character(internet$country[1]))
+}
+```
+### s
+```{r}
+meaninternet = mean(internet$"2012")
+if (internet$"2012"[1] >= meaninternet) {
+  print (as.character(internet$country[1]))
+} else {
+  cat (as.character(internet$country[1]), "has a lower internet usage than the mean.")       
+}
+```
+### t
+```{r}
+meaninternet = round(mean(internet$"2012"),2)
+x = 0
+for (i in internet$"2012"){
+  x =  x + 1
+  #print(x)
+  if (internet$"2012"[x] > meaninternet){
+    country = as.character(internet$country[x])
+    cat(country, "is greater than the mean of", meaninternet, 
+        "with a value of", internet$"2012"[x],"\n")
+  }
+}
+```
+### u
+```{r}
+s = "10-12-1977"
+s1 = strsplit(s, split='-', fixed=TRUE)
+s1
+
+# Return the third element
+s = "10-12-1977"
+s1 = unlist(strsplit(s, split='-', fixed=TRUE))[3]
+s1
+
+
+npv <-function (Pt,r,t){
+  pv=Pt/(1+r)^t
+  return (pv)
+}
+# Printing the result
+Pt<-50
+r<-.05
+t<-1
+npv(Pt,r,t)
+
+```
+### v
+```{r}
+# Writing the functions
+descriptives=function(x){
+  c(mean     = mean(x),
+    sd       = sd(x),
+    median   = median(x),
+    min      = min(x),
+    max      = max(x),
+    range    = max(x)-min(x),
+    quantile = quantile(x),
+    IQR      = IQR(x),
+    var      = var(x)              
+  )
+}
+
+#execute function below
+sapply(attitude, descriptives)
+
+```
+### w
+```{r}
+# import march madness data
+march <- read.csv('march_madness.csv', header=T, sep=',')
+# change columns to lowercase
+names(march) = tolower(names(march))
+library(stringr)
+wins=unlist(str_split(march$record, '-'))
+wins
+march_wins = data.frame(march,wins)
+View(march_wins)
+
+# Now, write a function for exercise w. 
+
+library(stringr)
+recordscore = function(x)
+{
+  c(unlist(str_split(x, '-'))[1])
+  
+}  
+
+march_wins =sapply(march$record, recordscore) 
+march_wins = as.numeric(march_wins)  # Converting to a numeric class
+class(march_wins)  # Checking to see that it is a numeric class
+max(march_wins)   # Checking the maximum value
+march_new = data.frame(march$school, march_wins)
+
+View(march_new)
+names(march_new) =c("school","wins")
+View(march_new)
+
+```
+### x
+```{r}
+# Import sidewalk dataset
+sidewalk <- read.csv("Sidewalk_Cafes.csv", header=T, sep=",")
+
+#Check class
+class(sidewalk)
+
+#mean of square footage
+mean(sidewalk$Lic.Area.Sq.Ft, na.rm='TRUE')
+
+#boxplot of the NYC slidewalk cafe size
+boxplot(sidewalk$Lic.Area.Sq.Ft, main="NYC Sidewalk Cafe Size")
+
+```
+### y
+```{r}
+enclosed <- subset.data.frame(sidewalk, sidewalk$Sidewalk.Cafe.Type == 'Enclosed')
+
+unenclosed <- subset.data.frame(sidewalk, sidewalk$Sidewalk.Cafe.Type == 'Unenclosed')
+```
+The data was then plotted with this code:
+```{r}
+boxplot(enclosed$Lic.Area.Sq.Ft, unenclosed$Lic.Area.Sq.Ft, names=c("Enclosed","Unenclosed"), main="NYC Sidewalk Cafe Size", horizontal = TRUE, xlab = "Square Footage")
+```
+### Summary for the boxplot above
+```{r}
+# The median size of the reported 139 enclosed cafes is 325.5 square feet. The largest enclosed cafe is 1044 square feet and the smallest is 1 square feet.
+
+# The median size of the reported 834 enclosed cafes is 202 square feet. The largest enclosed cafe is 1300 square feet and the smallest is 30 square feet.
+```
+### z (Using the Shiny App)
+```{r}
+require(shiny)
+runExample("01_hello")
+
+library(shiny)
+
+# Define server logic required to draw a histogram
+shinyServer(function(input, output) {
+  
+  # Expression that generates a histogram. The expression is
+  # wrapped in a call to renderPlot to indicate that:
+  #
+  #  1) It is "reactive" and therefore should re-execute automatically
+  #     when inputs change
+  #  2) Its output type is a plot
+  
+  output$distPlot <- renderPlot({
+    sidewalk <- read.csv("Sidewalk_Cafes.csv")
+    x   <-  na.omit(sidewalk$Lic.Area.Sq.Ft)
+    bins <- seq(min(x), max(x), length.out = input$bins + 1)
+    
+    # draw the histogram with the specified number of bins
+    hist(x, breaks = bins, col = 'darkgray', border = 'white', 
+    main="Histogram of Square Footage of NYC Sidewalk Cafes", 
+    xlab="Cafe Area Square Footage", ylab="Frequency")
+  })
+})
+
+# And now ui.R
+library(shiny)
+
+# Define UI for application that draws a histogram
+shinyUI(fluidPage(
+  
+  # Application title
+  titlePanel("NYC Sidewalk Cafe Data"),
+  
+  # Sidebar with a slider input for the number of bins
+  sidebarLayout(
+    sidebarPanel(
+      sliderInput("bins",
+                  "Number of bins:",
+                  min = 1,
+                  max = 50,
+                  value = 30)
+    ),
+    
+    # Show a plot of the generated distribution
+    mainPanel(
+      plotOutput("distPlot")
+    )
+  )
+))
+
+```
+
+
+
+
+
+
+
+
